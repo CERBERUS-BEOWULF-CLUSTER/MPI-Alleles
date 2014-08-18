@@ -1,0 +1,90 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <netdb.h>
+#include <sys/types.h>
+#include <errno.h>
+#include <time.h>
+#include <getopt.h>
+
+#define SIZE 1024
+#define True 1
+#define False 0
+#define MYPORT "1337"
+#define IP_ADDRESS "127.0.0.1"
+#define INET_ADDRSTLEN 10 
+
+int index_of(char *string, char character);
+
+int main(void) {
+        
+        int socket_fd, rv;
+        struct addrinfo hints, *res, *p;
+        
+        memset(&hints, 0, sizeof(hints));
+        
+        hints.ai_socktype = SOCK_DGRAM;
+        hints.ai_family = AF_INET;
+        char *message;
+        
+        char ip[INET_ADDRSTLEN] = IP_ADDRESS;
+        
+        
+        char port[5] = MYPORT;
+        struct sockaddr_inv;
+        
+        
+        memset(ip, 0, INET_ADDRSTRLEN);
+        memset(port, 0, 5);
+  
+        message = "ping";
+   
+        rv = getaddrinfo("127.0.0.1", MYPORT, &hints, &res);
+        if (rv != 0) {
+                fprintf(stderr, "Error [getaddrinfo]\n");
+                return 2;
+        }
+
+        for (p = res; p != NULL; p = p->ai_next) {
+                
+                if ((socket_fd = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) == -1) {
+                        fprintf(stderr, "Error [socket]\n");
+                        continue;
+                }
+
+                break;
+        }
+
+        freeaddrinfo(res);
+
+        if (p == NULL) {
+                fprintf(stderr, "Error [socket allocation]\n");
+                return -2;
+        }
+	int dounter = 16;
+		while (dounter > 0) {
+		int c =1, d =1;
+		for( c = 1; c <= 3267788888888888888; c++)
+			for( d = 1; d <= 326778888888888888; d++)
+			{
+		
+        int len = strlen(message);			
+			
+        int bytesSent = sendto(socket_fd, message, len > 1024 ? 1024 : len, 0, p->ai_addr, p->ai_addrlen);
+        if (bytesSent == -1) {
+                fprintf(stderr, "Error [socket send]\n");
+                return -2;
+			}
+			
+        }
+        printf("%s\n", message);
+		dounter--;
+	}
+        return 0;
+        
+}
+
